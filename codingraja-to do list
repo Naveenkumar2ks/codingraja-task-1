@@ -1,0 +1,57 @@
+import tkinter as tk
+from tkinter import ttk
+root = tk.Tk()
+root.title("To-Do List")
+# Create a label for the task
+task_label = ttk.Label(root, text="Task:")
+
+# Create an entry field for the task
+task_entry = ttk.Entry(root, width=30)
+
+# Create a label for the deadline
+deadline_label = ttk.Label(root, text="Deadline:")
+
+# Create an entry field for the deadline
+deadline_entry = ttk.Entry(root, width=30)
+
+# Create a button to add the task
+add_button = ttk.Button(root, text="Add Task", command=lambda: add_task(task_entry.get(), deadline_entry.get()))
+
+# Create a button to update the task
+update_button = ttk.Button(root, text="Update Task", command=lambda: update_task(task_entry.get(), deadline_entry.get()))
+
+# Create a button to delete the task
+delete_button = ttk.Button(root, text="Delete Task", command=lambda: delete_task(task_entry.get()))
+
+# Create a treeview to display the tasks
+tasks_tree = ttk.Treeview(root, columns=("Task", "Deadline"), show="headings")
+tasks_tree.heading("Task", text="Task")
+tasks_tree.heading("Deadline", text="Deadline")
+
+def add_task(task, deadline):
+    tasks_tree.insert("", "end", values=(task, deadline))
+    
+def update_task(task, deadline):
+    tasks_tree.set(tasks_tree.selection(), "Task", task)
+    tasks_tree.set(tasks_tree.selection(), "Deadline", deadline)
+
+def delete_task(task):
+    tasks_tree.delete(tasks_tree.selection())
+
+# Position the labels and entry fields
+task_label.grid(row=0, column=0, padx=10, pady=10, sticky="w")
+task_entry.grid(row=0, column=1, padx=10, pady=10)
+deadline_label.grid(row=1, column=0, padx=10, pady=10, sticky="w")
+deadline_entry.grid(row=1, column=1, padx=10, pady=10)
+
+# Position the buttons
+add_button.grid(row=2, column=0, padx=10, pady=10)
+update_button.grid(row=2, column=1, padx=10, pady=10)
+delete_button.grid(row=2, column=2, padx=10, pady=10)
+
+# Position the treeview
+tasks_tree.grid(row=3, column=0, columnspan=3, padx=10, pady=10)
+
+root.mainloop()
+
+
